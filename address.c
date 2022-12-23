@@ -24,7 +24,6 @@ void initAddress(Address* pAddress)
 	for (i=0;i<3; i++)
 	{
 		fixAd(addressArr[i]);
-
 	}
 	pAddress->street = addressArr[0];
 	pAddress->houseNumber = addressArr[1];

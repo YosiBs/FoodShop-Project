@@ -81,7 +81,8 @@ int addProduct(SuperMarket* pSuperMarket)
 	initProduct(pTemp);
 	if (isBarcodeTaken(pTemp->barcode, pSuperMarket))
 	{
-		printf("Product already has a barcode like this\n");
+		printf("~~Product already has a barcode like this!!-new product HASNT created~~\n");
+		
 		free(pTemp);
 		return;
 	}

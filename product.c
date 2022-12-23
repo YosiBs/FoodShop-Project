@@ -12,8 +12,8 @@ const char* typeTitle[NofTypes] = { "Shelf", "Frozen", "Fridge","FruitVegtable" 
 
 void initProduct(Product* pProduct)
 {
-	getProductName(pProduct->name);
 	getProductBarcode(pProduct->barcode);
+	getProductName(pProduct->name);
 	pProduct->Type = getProductType();
 	pProduct->price = getProductPrice();
 	pProduct->unitsInStock = getUnitsInStock();
