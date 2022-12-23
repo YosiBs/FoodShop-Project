@@ -28,7 +28,7 @@ void printSuperMarket(SuperMarket* pSuperMarket)
 	printf("\n\t~~Customer List~~ \n");
 	printAllCustomers(pSuperMarket);//print Customers
 	printf("\nNumber of Customers: %d\n", pSuperMarket->numOfCustomers);
-	printf("\n\t~~Product List~~ \n");
+	printf("\n\t~~Product List~~\n");
 	printAllProducts(pSuperMarket);//print Products
 	printf("\nNumber of Products: %d\n", pSuperMarket->numOfProducts);
 }
