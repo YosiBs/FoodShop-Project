@@ -81,3 +81,36 @@ char**	splitCharsToWords(char* str, int* pCount, int* pTotalLength)
 	*pCount = count;
 	return wordsArray;
 }
+int checkIfOnlyNumber(char* str)// return 1 if not good
+{
+	int i;	
+	for (i=0;i<strlen(str);i++)
+		{
+			if (str[i]<'0' || str[i]>'9')
+			{
+				return 0;
+			}
+	
+		}
+	return 1;
+	
+
+}
+int checkExactHashTag(char* str)
+{
+	int i ,count=0;
+	for (i = 0; i < strlen(str); i++)
+	{
+		if (str[i]=='#')
+		{
+			count++;
+		}
+	}
+	if (count==2)
+	{
+		return 1;
+	}
+	return 0;
+
+
+}

@@ -12,12 +12,15 @@ void initAddress(Address* pAddress)
 {
 	int i;
 	char* addressInput;
-	addressInput = getStrExactName("Please Enter an address for the SuperMarket.\nThe address need's to be as follow:\nStreet#House Number#City\n\nFor Example: Alenbi#20#Tel Aviv\nYou can use up to 254 chars.\n\n");
 	int wordCount = 0;
 	int totalLength=0;
 	char** addressArr=NULL;
-	addressArr=splitCharsToWords(addressInput, &wordCount, &totalLength);
-	//need to fix the address before applying it.
+	do {
+		addressInput = getStrExactName("Please Enter an address for the SuperMarket.\nThe address need's to be as follow:\nStreet#House Number#City\n\nFor Example: Alenbi#20#Tel Aviv\nYou can use up to 254 chars.\n\n");
+
+		addressArr = splitCharsToWords(addressInput, &wordCount, &totalLength);
+	} while (( !checkExactHashTag(addressInput)) || (!checkIfOnlyNumber(addressArr[1])) );
+	
 	for (i=0;i<3; i++)
 	{
 		fixAd(addressArr[i]);
@@ -26,14 +29,8 @@ void initAddress(Address* pAddress)
 	pAddress->street = addressArr[0];
 	pAddress->houseNumber = addressArr[1];
 	pAddress->city = addressArr[2];
-	
-	
-	
-	
 	free(addressInput);
 	free(addressArr);
-
-
 }
 
 void printAddress(Address* pAddress)
@@ -128,5 +125,4 @@ void freeAddress(Address* pAddress)
 	free(pAddress->city);
 	free(pAddress->houseNumber);
 	free(pAddress->street);
-
 }

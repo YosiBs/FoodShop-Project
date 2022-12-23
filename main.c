@@ -14,13 +14,17 @@ int main()
 	//initProduct(&p);
 	//printProduct(&p);
 	
+	
 	SuperMarket sm;
 	initSuperMarket(&sm);
-//	addProduct(&sm);
+
+	
+	
+	//	addProduct(&sm);
 //	addProduct(&sm);
 	//printProductsByType(&sm);
 	//addCustomer(&sm);
-//	printSuperMarket(&sm);
+	printSuperMarket(&sm);
 	
 	
 
