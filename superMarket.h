@@ -33,4 +33,8 @@ void askUserToAddProduct(SuperMarket* pSuperMarket);
 void askUserToAddCustomer(SuperMarket* pSuperMarket);
 int checkIfCustomerExist(char* reqCustomer,SuperMarket* pSuperMarket);
 Product* getProductByBarcode(char* reqBarcode,SuperMarket* pSuperMarket);
+int isCustomerExist(char* temp, const SuperMarket* pSuperMarket);
+int updateStock(SuperMarket* pSuperMarket, int index);
+
+
 #endif

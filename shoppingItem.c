@@ -2,9 +2,9 @@
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>
-
 #include "shoppingItem.h"
 #include "product.h"
+
 void initShoppingItem(ShoppingItem* pShoppingItem,Product* p)
 {
 	strcpy(pShoppingItem->barcode,p->barcode);
@@ -26,5 +26,5 @@ int getItemAmount(Product* p)
 		scanf("%d",&amount);
 	} while (amount>0 && amount<p->unitsInStock);
 	p->unitsInStock -= amount;
-	return 0;
+	return amount;
 }

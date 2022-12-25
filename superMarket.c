@@ -62,7 +62,7 @@ void getSuperMarketName(SuperMarket* pSuperMarket)
 	pSuperMarket ->name= getStrExactName("Enter SuperMarket Name:");
 }
 
-void getAddress(SuperMarket* pSuperMarket)//????
+void getAddress(SuperMarket* pSuperMarket)
 {
 	initAddress(&pSuperMarket->address);
 	
@@ -70,24 +70,21 @@ void getAddress(SuperMarket* pSuperMarket)//????
 
 int addProduct(SuperMarket* pSuperMarket)
 {
-
-	
+	int index;
 	Product* pTemp= (Product*)calloc(1, sizeof(Product));
-	
 	if (!pTemp)
 	{
 		return 0;
 	}
 	initProduct(pTemp);
-	if (isBarcodeTaken(pTemp->barcode, pSuperMarket))
+	if (index=isBarcodeTaken(pTemp->barcode, pSuperMarket))
 	{
-		printf("~~Product already has a barcode like this!!-new product HASNT created~~\n");
-		
+		index--;
+		printf("~~Product already has a barcode like this!!\n");
+		updateStock(pSuperMarket,index);
 		free(pTemp);
-		return;
+		return 0;
 	}
-	
-
 	pSuperMarket->productArr = (Product**)realloc(pSuperMarket->productArr,(pSuperMarket->numOfProducts+1) * sizeof(Product*));
 	if (!pSuperMarket)
 	{
@@ -98,27 +95,37 @@ int addProduct(SuperMarket* pSuperMarket)
 	{
 		return 0;
 	}
-	//initProduct(pSuperMarket->productArr[pSuperMarket->numOfProducts]);
-	//check if product exist
 	pSuperMarket->numOfProducts++;
-	return 1;
-
-	
+	return 1;	
 }
-
 int addCustomer(SuperMarket* pSuperMarket)
 {
+	int index;
+	Customer* pTemp = (Customer*)calloc(1, sizeof(Customer));
+	if (!pTemp)
+	{
+		return 0;
+	}
+	initCustomer(pTemp);
+	if (index = isCustomerExist(pTemp->name, pSuperMarket))
+	{
+		index--;
+		printf("~~Customer already exist!!-a new Customer HASN'T created.\n");
+		free(pTemp);
+		return 0;
+	}
+
 	pSuperMarket->customerArr = (Customer**)realloc(pSuperMarket->customerArr, (pSuperMarket->numOfCustomers + 1) * sizeof(Customer*));
 	if (!pSuperMarket)
 	{
 		return 0;
 	}
-	pSuperMarket->customerArr[pSuperMarket->numOfCustomers] = (Customer*)calloc(1, sizeof(Customer));
+	pSuperMarket->customerArr[pSuperMarket->numOfCustomers] = pTemp;
 	if (!pSuperMarket->customerArr[pSuperMarket->numOfCustomers])
 	{
 		return 0;
 	}
-	initCustomer(pSuperMarket->customerArr[pSuperMarket->numOfCustomers]);
+	
 	pSuperMarket->numOfCustomers++;
 	return 1;
 	
@@ -128,23 +135,26 @@ int shop(SuperMarket* pSuperMarket)
 {
 	if (pSuperMarket->numOfProducts == 0)
 	{
-		printf("There is No Products in The SuperMarket for you to Shop..\n");
+		printf("~~There is No Products in The SuperMarket for you to Shop..\n");
 		return 0;
 	}
-	int e;//customer index if he exist
+	if (pSuperMarket->numOfCustomers==0)
+	{
+		printf("~~There is No Products in The SuperMarket for you to Shop..\n");
+		return 0;
+	}
+	int e;//customer index in CustomerArr
 	char op;
 	char* reqCustomer,*reqBarcode;
-	printf("\t~~~~Start Shopping~~~~~\n");
-	do 
+	printf("\t~~~~Start Shopping~~~~~\n");	
+	reqCustomer = getStrExactName("Enter Customer Name: \n");
+	e = isCustomerExist(reqCustomer, pSuperMarket);//Not Working
+	if (e==0)
 	{
-		//printf("Enter Customer Name: \n");
-		reqCustomer = getStrExactName("Enter Customer Name: \n");
-		e= checkIfCustomerExist(reqCustomer, pSuperMarket);//Not Working
-		if (e==-1)
-		{
-			printf("Customer Doesn't Exist, try again \n");
-		}
-	} while (e==-1);
+		printf("~~Customer Doesn't Exist!!\n");
+		return 0;
+	}
+	e-=1;
 	printAllProducts(pSuperMarket);
 	do
 	{
@@ -159,10 +169,17 @@ int shop(SuperMarket* pSuperMarket)
 			return 0;
 		}
 		else {
-			//printf("Please Enter the Barcode of the Product you want to purchase:\n");
+			
 			reqBarcode = getStrExactName("Please Enter the Barcode of the Product you want to purchase:\n");
 			Product* reqP=getProductByBarcode(reqBarcode,pSuperMarket);
+			if (reqP==NULL)
+			{
+				printf("~~Product Doesn't Exist\n");
+				return 0;
+			}
 			addItemToCart(pSuperMarket->customerArr[e]->Cart,reqP);
+		
+			return 1;
 		}
 	} while (op == 'y' || op == 'Y');
 	printf("Done Shopping...");
@@ -192,7 +209,7 @@ int isBarcodeTaken(char* temp ,const SuperMarket* pSuperMarket)
 	{
 		if (strcmp(pSuperMarket->productArr[i]->barcode ,temp) == 0 )
 		{
-			return 1;
+			return i+1;
 		}
 
 	}
@@ -268,13 +285,39 @@ Product* getProductByBarcode(char* reqBarcode, SuperMarket* pSuperMarket)
 	int i;
 	for (i = 0; i < pSuperMarket->numOfProducts; i++)
 	{
-		if (pSuperMarket->productArr[i]->barcode == reqBarcode)
+		if (strcmp(pSuperMarket->productArr[i]->barcode,reqBarcode))
 			return pSuperMarket->productArr[i];
 	}
+	
 	return NULL;
 	
 }
+int updateStock(SuperMarket* pSuperMarket, int productIndex)
+{
+	int newAmount;
+	printf("Update Units in stock-\nOld Amount:%d\n", pSuperMarket->productArr[productIndex]->unitsInStock);
+	do {
+		printf("New Stock Must be bigger than [%d]\nEnter New Amount:\n", pSuperMarket->productArr[productIndex]->unitsInStock);
+		scanf("%d", &newAmount);
+	} while (newAmount<= pSuperMarket->productArr[productIndex]->unitsInStock);
+	
+	pSuperMarket->productArr[productIndex]->unitsInStock = newAmount;
+	
+	return 0;
+}
+int isCustomerExist(char* temp, const SuperMarket* pSuperMarket)
+{
+	int i;
+	for (i = 0; i < pSuperMarket->numOfCustomers; i++)
+	{
+		if (strcmp(pSuperMarket->customerArr[i]->name, temp) == 0)
+		{
+			return i + 1;
+		}
 
+	}
+	return 0;
+}
 
 
 

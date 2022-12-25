@@ -83,7 +83,8 @@ char**	splitCharsToWords(char* str, int* pCount, int* pTotalLength)
 }
 int checkIfOnlyNumber(char* str)// return 1 if not good
 {
-	int i;	
+	
+	unsigned int i;
 	for (i=0;i<strlen(str);i++)
 		{
 			if (str[i]<'0' || str[i]>'9')
@@ -98,7 +99,8 @@ int checkIfOnlyNumber(char* str)// return 1 if not good
 }
 int checkExactHashTag(char* str)
 {
-	int i ,count=0;
+	unsigned int i;
+	int count=0;
 	for (i = 0; i < strlen(str); i++)
 	{
 		if (str[i]=='#')

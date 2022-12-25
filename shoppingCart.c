@@ -23,8 +23,15 @@ float totalPrice()
 	return 0.0f;
 }
 
-int addItemToCart(ShoppingCart* pShoppingCart, Product* p)
+int addItemToCart(ShoppingCart* pShoppingCart, Product* reqP)
 {
+	ShoppingItem* pTemp= (ShoppingItem*)calloc(1, sizeof(ShoppingItem));
+	if (!pTemp)
+	{
+		return 0;
+	}
+	initShoppingItem(pTemp, reqP);
+
 	pShoppingCart->ItemArr = (ShoppingItem**)realloc(pShoppingCart->ItemArr, (pShoppingCart->difItemsInCart + 1) * sizeof(ShoppingItem*));
 	if (!pShoppingCart)
 	{
@@ -35,7 +42,7 @@ int addItemToCart(ShoppingCart* pShoppingCart, Product* p)
 	{
 		return 0;
 	}
-	initShoppingItem(pShoppingCart->ItemArr[pShoppingCart->difItemsInCart],p);
+	initShoppingItem(pShoppingCart->ItemArr[pShoppingCart->difItemsInCart],reqP);
 	pShoppingCart->difItemsInCart++;
 	
 	return 1;
