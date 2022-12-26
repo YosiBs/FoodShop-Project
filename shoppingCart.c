@@ -42,7 +42,7 @@ int addItemToCart(ShoppingCart* pShoppingCart, Product* reqP)
 	{
 		return 0;
 	}
-	initShoppingItem(pShoppingCart->ItemArr[pShoppingCart->difItemsInCart],reqP);
+	
 	pShoppingCart->difItemsInCart++;
 	
 	return 1;

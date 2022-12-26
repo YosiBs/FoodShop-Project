@@ -10,8 +10,11 @@
 void initCustomer(Customer* pCustomer)
 {
 	getCustomerName(pCustomer);
-	pCustomer->Cart = NULL;
-
+	pCustomer->Cart = (Customer*)calloc(1, sizeof(Customer));
+	if (!pCustomer->Cart)
+	{
+		return 0;
+	}
 }
 
 void printCustomer(Customer* pCustomer)

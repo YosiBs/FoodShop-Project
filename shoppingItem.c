@@ -15,6 +15,7 @@ void initShoppingItem(ShoppingItem* pShoppingItem,Product* p)
 void printShoppingItem()
 {
 
+
 }
 
 int getItemAmount(Product* p)
@@ -22,9 +23,9 @@ int getItemAmount(Product* p)
 	int amount;
 	do
 	{
-		printf("How Many of that Item would You like?(1-%d)",p->unitsInStock);
+		printf("How Many of that Item would You like?(1-%d): ",p->unitsInStock);
 		scanf("%d",&amount);
-	} while (amount>0 && amount<p->unitsInStock);
+	} while ((amount <= 0) || (amount > p->unitsInStock) || isspace(&amount));
 	p->unitsInStock -= amount;
 	return amount;
 }

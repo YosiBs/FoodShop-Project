@@ -146,7 +146,8 @@ int shop(SuperMarket* pSuperMarket)
 	int e;//customer index in CustomerArr
 	char op;
 	char* reqCustomer,*reqBarcode;
-	printf("\t~~~~Start Shopping~~~~~\n");	
+	printf("---------------------START SHOPPING---------------------\n");
+	
 	reqCustomer = getStrExactName("Enter Customer Name: \n");
 	e = isCustomerExist(reqCustomer, pSuperMarket);//Not Working
 	if (e==0)
@@ -177,8 +178,10 @@ int shop(SuperMarket* pSuperMarket)
 				printf("~~Product Doesn't Exist\n");
 				return 0;
 			}
+
+			initShoppingCart(pSuperMarket->customerArr[e]->Cart);
 			addItemToCart(pSuperMarket->customerArr[e]->Cart,reqP);
-		
+			
 			return 1;
 		}
 	} while (op == 'y' || op == 'Y');
@@ -235,6 +238,7 @@ void freeSuperMarket(SuperMarket* pSuperMarket)
 void askUserToAddProduct(SuperMarket* pSuperMarket)
 {
 	char op = ' ';
+	printf("---------------------ADD PRODUCT---------------------\n");
 	do
 	{
 		printf("Would you like to add a Product to the SuperMarket?\ny/Y (Yes)\nAnything else (No)\n");
@@ -254,20 +258,11 @@ void askUserToAddProduct(SuperMarket* pSuperMarket)
 }
 void askUserToAddCustomer(SuperMarket* pSuperMarket)
 {
-	char op = ' ';
-	printf("Would you like to add a Customer to the SuperMarket?\ny/Y (Yes)\nAnything else (No)\n");
-	do
-	{
-		scanf("%c", &op);
-
-	} while (isspace(op));
-	if (op != 'y' && op != 'Y')
-	{
-		return;
-	}
-	else {
+	
+	printf("---------------------ADD CUSTOMER---------------------\n");
+	
 		addCustomer(pSuperMarket);
-	}
+	
 }
 
 int checkIfCustomerExist(char* reqCustomer,SuperMarket* pSuperMarket)
@@ -283,10 +278,15 @@ int checkIfCustomerExist(char* reqCustomer,SuperMarket* pSuperMarket)
 Product* getProductByBarcode(char* reqBarcode, SuperMarket* pSuperMarket)
 {
 	int i;
+	//int size = strlen(reqBarcode)+1;
+	//char* fixedBarcode=myGets(reqBarcode, size);
 	for (i = 0; i < pSuperMarket->numOfProducts; i++)
 	{
-		if (strcmp(pSuperMarket->productArr[i]->barcode,reqBarcode))
+		if (strcmp(pSuperMarket->productArr[i]->barcode, reqBarcode)==0)// problem
+		{
 			return pSuperMarket->productArr[i];
+		}
+			
 	}
 	
 	return NULL;
