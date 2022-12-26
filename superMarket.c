@@ -22,6 +22,7 @@ void initSuperMarket(SuperMarket* pSuperMarket)
 
 void printSuperMarket(SuperMarket* pSuperMarket)
 {
+	printf("\n@@---------------------SuperMarket Details---------------------@@\n");
 	printf("\nSuperMarket: %s\n", pSuperMarket->name);
 	printf("\t~~Address~~ \n");
 	printAddress(&pSuperMarket->address);
@@ -36,25 +37,33 @@ void printSuperMarket(SuperMarket* pSuperMarket)
 void printAllCustomers(SuperMarket* pSuperMarket)
 {
 	int i;
-	for (i = 0; i < pSuperMarket->numOfCustomers; i++)
+	if (pSuperMarket->numOfCustomers != 0)
 	{
-		printCustomer(pSuperMarket->customerArr[i]);
-
+		for (i = 0; i < pSuperMarket->numOfCustomers; i++)
+		{
+			printCustomer(&pSuperMarket->customerArr[i]);
+		}
 	}
-
+	else {
+		printf("~~There is no Customers Yet...\n");
+	}
 }
 
 void printAllProducts(SuperMarket* pSuperMarket)
 {
 	int i;
 	char a1[20]="~Product Name~", a2[20] ="~Barcode~", a3[20] ="~Type~", a4[20] ="~Price~", a5[20] ="~Units in Stock~";
-	printf("%-15s\t%-15s\t%-15s\t%-15s\t%-15s\t\n",a1,a2,a3,a4,a5);
-	for (i = 0; i < pSuperMarket->numOfProducts; i++)
+	if (pSuperMarket->numOfProducts != 0)
 	{
-		printProduct(pSuperMarket->productArr[i]);
-
+		printf("%-15s\t%-15s\t%-15s\t%-15s\t%-15s\t\n",a1,a2,a3,a4,a5);
+		for (i = 0; i < pSuperMarket->numOfProducts; i++)
+		{
+			printProduct(pSuperMarket->productArr[i]);
+		}
 	}
-	
+	else {
+		printf("~~There is no Products Yet...\n");
+	}
 }
 
 void getSuperMarketName(SuperMarket* pSuperMarket)
@@ -115,19 +124,16 @@ int addCustomer(SuperMarket* pSuperMarket)
 		return 0;
 	}
 
-	pSuperMarket->customerArr = (Customer**)realloc(pSuperMarket->customerArr, (pSuperMarket->numOfCustomers + 1) * sizeof(Customer*));
-	if (!pSuperMarket)
+	pSuperMarket->customerArr = (Customer*)realloc(pSuperMarket->customerArr, (pSuperMarket->numOfCustomers + 1) * sizeof(Customer));
+	if (!pSuperMarket->customerArr)
 	{
 		return 0;
 	}
-	pSuperMarket->customerArr[pSuperMarket->numOfCustomers] = pTemp;
-	if (!pSuperMarket->customerArr[pSuperMarket->numOfCustomers])
-	{
-		return 0;
-	}
-	
+	pSuperMarket->customerArr[pSuperMarket->numOfCustomers] = *pTemp;
 	pSuperMarket->numOfCustomers++;
 	return 1;
+	
+	
 	
 }
 
@@ -179,8 +185,8 @@ int shop(SuperMarket* pSuperMarket)
 				return 0;
 			}
 
-			initShoppingCart(pSuperMarket->customerArr[e]->Cart);
-			addItemToCart(pSuperMarket->customerArr[e]->Cart,reqP);
+			initShoppingCart(pSuperMarket->customerArr[e].Cart);
+			addItemToCart(pSuperMarket->customerArr[e].Cart,reqP);
 			
 			return 1;
 		}
@@ -229,7 +235,7 @@ void freeSuperMarket(SuperMarket* pSuperMarket)
 	}
 	for (i = 0; i < pSuperMarket->numOfCustomers; i++)// free all customers
 	{
-		freeCustomer(pSuperMarket->customerArr[i]);
+		freeCustomer(&pSuperMarket->customerArr[i]);
 	}
 	freeAddress(&pSuperMarket->address);
 	free(pSuperMarket);// free super market
@@ -265,16 +271,6 @@ void askUserToAddCustomer(SuperMarket* pSuperMarket)
 	
 }
 
-int checkIfCustomerExist(char* reqCustomer,SuperMarket* pSuperMarket)
-{
-	int i;
-	for (i=0 ;i< pSuperMarket->numOfCustomers;i++)
-	{
-		if (strcmp(pSuperMarket->customerArr[i]->name , reqCustomer))
-			return i;
-	}
-	return -1;
-}
 Product* getProductByBarcode(char* reqBarcode, SuperMarket* pSuperMarket)
 {
 	int i;
@@ -310,7 +306,7 @@ int isCustomerExist(char* temp, const SuperMarket* pSuperMarket)
 	int i;
 	for (i = 0; i < pSuperMarket->numOfCustomers; i++)
 	{
-		if (strcmp(pSuperMarket->customerArr[i]->name, temp) == 0)
+		if (strcmp((char*)pSuperMarket->customerArr[i].name, temp) == 0)
 		{
 			return i + 1;
 		}

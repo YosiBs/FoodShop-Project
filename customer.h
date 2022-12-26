@@ -11,17 +11,17 @@ typedef struct
 
 } Customer;
 
-void initCustomer(Customer* pCustomer);
+int initCustomer(Customer* pCustomer);
 void printCustomer(Customer* pCustomer);
 
 
-void PrintAllShoppingItems(Customer* pCustomer);
+int PrintAllShoppingItems(Customer* pCustomer);
 
-void getCustomerName(Customer* pCustomer);
+int getCustomerName(Customer* pCustomer);
 
 
 
-void freeCustomer();// free name
+void freeCustomer(Customer* pCustomer);
 
 
 

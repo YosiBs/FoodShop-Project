@@ -7,37 +7,57 @@
 
 
 
-void initCustomer(Customer* pCustomer)
+int initCustomer(Customer* pCustomer)
 {
 	getCustomerName(pCustomer);
-	pCustomer->Cart = (Customer*)calloc(1, sizeof(Customer));
+	pCustomer->Cart = (ShoppingCart*)calloc(1, sizeof(ShoppingCart));
 	if (!pCustomer->Cart)
 	{
+		free(pCustomer->name);
 		return 0;
 	}
+	return 1;
 }
 
 void printCustomer(Customer* pCustomer)
 {
-	printf("Customer Name: %s\n", pCustomer->name);
+	printf("\nCustomer Name: %s\n", pCustomer->name);
 	printf("Items in Cart: \n");
 	PrintAllShoppingItems(pCustomer);
 }
 
-void PrintAllShoppingItems(Customer * pCustomer)
+int PrintAllShoppingItems(Customer* pCustomer)
 {
-
+	int i;
+	if (pCustomer->Cart->difItemsInCart != 0)
+	{
+		for (i = 0; i < pCustomer->Cart->difItemsInCart; i++)
+		{
+			printf("item %d: %s\n",i+1, pCustomer->Cart->ItemArr[i]);
+			return 1;
+		}
+	}
+	else {
+		printf("Cart is Empty..\n");
+		return 1;
+	}
 	
 }
 
-void getCustomerName(Customer* pCustomer)
+int getCustomerName(Customer* pCustomer)
 {
 	pCustomer->name= getStrExactName("Enter Customer Name: ");
+	if (!pCustomer->name)
+	{
+		free(pCustomer->name);
+		return 0;
+	}
+	return 1;
 }
 
 
 
 void freeCustomer(Customer* pCustomer)
 {
-	free(pCustomer);
+	free(pCustomer->name);
 }

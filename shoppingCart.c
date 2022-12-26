@@ -37,13 +37,7 @@ int addItemToCart(ShoppingCart* pShoppingCart, Product* reqP)
 	{
 		return 0;
 	}
-	pShoppingCart->ItemArr[pShoppingCart->difItemsInCart] = (ShoppingItem*)calloc(1, sizeof(ShoppingItem));
-	if (!pShoppingCart->ItemArr[pShoppingCart->difItemsInCart])
-	{
-		return 0;
-	}
-	
+	pShoppingCart->ItemArr[pShoppingCart->difItemsInCart] = pTemp;
 	pShoppingCart->difItemsInCart++;
-	
 	return 1;
 }

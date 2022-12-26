@@ -20,12 +20,13 @@ void printShoppingItem()
 
 int getItemAmount(Product* p)
 {
-	int amount;
+	int amount=0;
 	do
 	{
 		printf("How Many of that Item would You like?(1-%d): ",p->unitsInStock);
+
 		scanf("%d",&amount);
-	} while ((amount <= 0) || (amount > p->unitsInStock) || isspace(&amount));
+	} while (amount <= 0 || amount > p->unitsInStock );
 	p->unitsInStock -= amount;
 	return amount;
 }

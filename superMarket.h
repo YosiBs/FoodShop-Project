@@ -8,7 +8,7 @@ typedef struct
 {
 	char* name;
 	Address address;
-	Customer** customerArr;
+	Customer* customerArr;
 	int numOfCustomers;
 	Product** productArr;
 	int numOfProducts;
@@ -31,7 +31,7 @@ void printProductsByType(SuperMarket* pSuperMarket);
 void freeSuperMarket(SuperMarket* pSuperMarket);// free customer and product and name
 void askUserToAddProduct(SuperMarket* pSuperMarket);
 void askUserToAddCustomer(SuperMarket* pSuperMarket);
-int checkIfCustomerExist(char* reqCustomer,SuperMarket* pSuperMarket);
+
 Product* getProductByBarcode(char* reqBarcode,SuperMarket* pSuperMarket);
 int isCustomerExist(char* temp, const SuperMarket* pSuperMarket);
 int updateStock(SuperMarket* pSuperMarket, int index);
