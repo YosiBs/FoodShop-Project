@@ -12,17 +12,9 @@ typedef struct
 } Customer;
 
 int initCustomer(Customer* pCustomer);
-void printCustomer(Customer* pCustomer);
-
-
-int PrintAllShoppingItems(Customer* pCustomer);
-
+void printCustomer(Customer* pCustomer);//CONST?
+int PrintAllShoppingItems(Customer* pCustomer);//CONST?
 int getCustomerName(Customer* pCustomer);
-
-
-
 void freeCustomer(Customer* pCustomer);
-
-
 
 #endif

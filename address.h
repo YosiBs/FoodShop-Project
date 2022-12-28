@@ -11,7 +11,7 @@ typedef struct
 } Address;
 
 void initAddress(Address* pAddress);
-void printAddress(Address* pAddress);
+void printAddress(Address* pAddress);//CONST?
 void freeAddress(Address* pAddress);//free street, city,house number
 void fixAd(char *str);
 int find_last_word(char *str);

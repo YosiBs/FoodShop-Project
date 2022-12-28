@@ -153,9 +153,10 @@ int shop(SuperMarket* pSuperMarket)
 	char op;
 	char* reqCustomer,*reqBarcode;
 	printf("---------------------START SHOPPING---------------------\n");
-	
+	printf("\n\t~~Customer List~~ \n");
+	printAllCustomers(pSuperMarket);//print Customers
 	reqCustomer = getStrExactName("Enter Customer Name: \n");
-	e = isCustomerExist(reqCustomer, pSuperMarket);//Not Working
+	e = isCustomerExist(reqCustomer, pSuperMarket);
 	if (e==0)
 	{
 		printf("~~Customer Doesn't Exist!!\n");
@@ -192,13 +193,17 @@ int shop(SuperMarket* pSuperMarket)
 		}
 	} while (op == 'y' || op == 'Y');
 	printf("Done Shopping...");
+	free(reqCustomer);
+	free(reqBarcode);
+	
 	return 0;
 }
 
 void printProductsByType(SuperMarket* pSuperMarket)
 {
 	int i, requestedType;
-	printf("\nYou Chose to see all products by Type.");
+
+	printf("-----------------PRINT PRODUCTS BY TYPE-----------------\n");
 	requestedType = getProductType();
 	char a1[20] = "~Product Name~", a2[20] = "~Barcode~", a3[20] = "~Type~", a4[20] = "~Price~", a5[20] = "~Units in Stock~";
 	printf("%-15s\t%-15s\t%-15s\t%-15s\t%-15s\t\n", a1, a2, a3, a4, a5);
@@ -299,6 +304,33 @@ int updateStock(SuperMarket* pSuperMarket, int productIndex)
 	
 	pSuperMarket->productArr[productIndex]->unitsInStock = newAmount;
 	
+	return 0;
+}
+int printCustomerShoppingCart(SuperMarket * pSuperMarket)
+{
+	char* reqCustomer;
+	int e;
+	printf("---------------PRINT CUSTOMER SHOPPING CART---------------\n");
+	if (pSuperMarket->numOfProducts == 0) {
+		printf("There is No Products in the Market yet...\n");
+		return 0;
+	}
+	else {
+		printAllCustomers(pSuperMarket);
+		printf("Who is shopping?\n");
+		reqCustomer = getStrExactName("Enter Customer Name: \n");
+		e = isCustomerExist(reqCustomer, pSuperMarket);
+		if (e == 0)
+		{
+			printf("~~Customer Doesn't Exist!!\n");
+			return 0;
+		}
+		e -= 1;
+		//PrintAllShoppingItems();
+		printShoppingCart(pSuperMarket->customerArr[e].Cart);
+		totalPrice(pSuperMarket->customerArr[e].Cart);
+	}
+
 	return 0;
 }
 int isCustomerExist(char* temp, const SuperMarket* pSuperMarket)

@@ -22,8 +22,16 @@ int initCustomer(Customer* pCustomer)
 void printCustomer(Customer* pCustomer)
 {
 	printf("\nCustomer Name: %s\n", pCustomer->name);
-	printf("Items in Cart: \n");
-	PrintAllShoppingItems(pCustomer);
+	if (pCustomer->Cart->difItemsInCart>0)
+	{
+		printf("Customer in Shopping Progrress\n");
+	}
+	else {
+		printf("Cart is Empty..\n");
+
+	}
+	
+	//PrintAllShoppingItems(pCustomer);
 }
 
 int PrintAllShoppingItems(Customer* pCustomer)
@@ -33,7 +41,7 @@ int PrintAllShoppingItems(Customer* pCustomer)
 	{
 		for (i = 0; i < pCustomer->Cart->difItemsInCart; i++)
 		{
-			printf("item %d: %s\n",i+1, pCustomer->Cart->ItemArr[i]);
+			printf("item %d: %s\n",i+1, pCustomer->Cart->ItemArr[i]->barcode);
 			return 1;
 		}
 	}
@@ -41,7 +49,7 @@ int PrintAllShoppingItems(Customer* pCustomer)
 		printf("Cart is Empty..\n");
 		return 1;
 	}
-	
+	return 1;
 }
 
 int getCustomerName(Customer* pCustomer)

@@ -66,13 +66,13 @@ void chooseProgram(SuperMarket* pSuperMarket)
 			shop(pSuperMarket);
 			break;
 		case 5:
-			printf("You Chose %d\n", choose);
+			printCustomerShoppingCart(pSuperMarket);
 			break;
 		case 6:
 			printf("You Chose %d\n", choose);
 			break;
 		case 7:
-			printf("You Chose %d\n", choose);
+			printProductsByType(pSuperMarket);
 			break;
 		case 8:
 			printf("You Chose %d\n", choose);

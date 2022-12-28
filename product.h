@@ -19,13 +19,13 @@ typedef struct
 } Product;
 
 void initProduct(Product* pProduct);
-void printProduct(Product* pProduct);
+void printProduct(Product* pProduct);//CONST?
 void getProductName(char* name);
 void getProductBarcode(char* code);
 ProductType getProductType();
 float getProductPrice();
 int getUnitsInStock();
-int isValid(char* check);
+int isValid(char* check);//CONST?
 
 void freeProduct(Product* pProduct);
 #endif

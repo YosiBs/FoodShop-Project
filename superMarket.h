@@ -16,25 +16,25 @@ typedef struct
 } SuperMarket;
 
 void initSuperMarket(SuperMarket* pSuperMarket);
-void printSuperMarket(SuperMarket* pSuperMarket);
-void printAllCustomers(SuperMarket* pSuperMarket);
-void printAllProducts(SuperMarket* pSuperMarket);
+void printSuperMarket(SuperMarket* pSuperMarket);//CONST?
+void printAllCustomers(SuperMarket* pSuperMarket);//CONST?
+void printAllProducts(SuperMarket* pSuperMarket);//CONST?
 void getSuperMarketName(SuperMarket* pSuperMarket);
 
 void getAddress(SuperMarket* pSuperMarket);
 
-int isBarcodeTaken(char* temp,const SuperMarket* pSuperMarket);
+int isBarcodeTaken(char* temp,const SuperMarket* pSuperMarket);//CONST?
 int addProduct(SuperMarket* pSuperMarket);
 int addCustomer(SuperMarket* pSuperMarket);
 int shop(SuperMarket* pSuperMarket);
-void printProductsByType(SuperMarket* pSuperMarket);
+void printProductsByType(SuperMarket* pSuperMarket);//CONST?
 void freeSuperMarket(SuperMarket* pSuperMarket);// free customer and product and name
 void askUserToAddProduct(SuperMarket* pSuperMarket);
 void askUserToAddCustomer(SuperMarket* pSuperMarket);
 
 Product* getProductByBarcode(char* reqBarcode,SuperMarket* pSuperMarket);
-int isCustomerExist(char* temp, const SuperMarket* pSuperMarket);
+int isCustomerExist(char* temp, const SuperMarket* pSuperMarket);//CONST?
 int updateStock(SuperMarket* pSuperMarket, int index);
-
+int printCustomerShoppingCart(SuperMarket* pSuperMarket);//CONST?
 
 #endif

@@ -4,17 +4,19 @@
 #include <ctype.h>
 #include "shoppingItem.h"
 #include "product.h"
+#include "shoppingCart.h"
 
 void initShoppingItem(ShoppingItem* pShoppingItem,Product* p)
 {
 	strcpy(pShoppingItem->barcode,p->barcode);
 	pShoppingItem->price = p->price;
-	pShoppingItem->itemAmount= getItemAmount(p);//how much of that item is in the shopping cart
+	pShoppingItem->itemAmount += updateItemAmount(pShoppingItem,p);//PROBLEM, item Overriding the last value...
+	
 }
 
-void printShoppingItem()
+void printShoppingItem(ShoppingItem* pShoppingItem)
 {
-
+	printf("Barcode: %s\t Price per item: %.2f\t item Amount: %d\n", pShoppingItem->barcode, pShoppingItem->price, pShoppingItem->itemAmount);
 
 }
 
@@ -29,4 +31,9 @@ int getItemAmount(Product* p)
 	} while (amount <= 0 || amount > p->unitsInStock );
 	p->unitsInStock -= amount;
 	return amount;
+}
+int updateItemAmount(ShoppingItem* pShoppingItem, Product* p)
+{
+	
+	return getItemAmount(p);
 }

@@ -10,9 +10,9 @@ typedef struct
 } ShoppingCart;
 
 void initShoppingCart(ShoppingCart* pShoppingCart);
-void printShoppingCart(ShoppingCart* pShoppingCart);
+void printShoppingCart(ShoppingCart* pShoppingCart);//CONST?
 void freeShoppingCart(ShoppingCart* pShoppingCart);
-float totalPrice();
+float totalPrice(ShoppingCart* pShoppingCart);
 int addItemToCart(ShoppingCart* pShoppingCart,Product* p);
 
 #endif

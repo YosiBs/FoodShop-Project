@@ -11,8 +11,9 @@ typedef struct
 } ShoppingItem;
 
 void initShoppingItem(ShoppingItem* pShoppingItem, Product* p);
-void printShoppingItem();
+void printShoppingItem(ShoppingItem* pShoppingItem);//CONST?
 int getItemAmount(Product* p);
+int updateItemAmount(ShoppingItem* pShoppingItem, Product* p);
 
 #endif
 

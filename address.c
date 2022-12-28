@@ -34,7 +34,7 @@ void initAddress(Address* pAddress)
 
 void printAddress(Address* pAddress)
 {
-	printf("Address: %s %s,%s \n", pAddress->street, pAddress->houseNumber, pAddress->city);
+	printf("Address:%s %s,%s\n", pAddress->street, pAddress->houseNumber, pAddress->city);
 	
 }
 void fixAd(char *str) {
