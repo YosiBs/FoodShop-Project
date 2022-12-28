@@ -18,20 +18,39 @@ void initShoppingCart(ShoppingCart* pShoppingCart)
 	
 }
 
-void printShoppingCart(ShoppingCart* pShoppingCart)
+int printShoppingCart(const ShoppingCart* pShoppingCart)
 {
 	int i;
+	if (pShoppingCart->difItemsInCart == 0)
+	{
+		printf("Customer Cart is Empty..\n");
+		return 0;
+	}
 	for (i=0 ; i < pShoppingCart->difItemsInCart ; i++)
 	{
 		printShoppingItem(pShoppingCart->ItemArr[i]);
 	}
+	return 1;
 }
 
 void freeShoppingCart(ShoppingCart* pShoppingCart)
 {
+	int i;
+	if (pShoppingCart->difItemsInCart > 0)
+	{
+		for (i=0 ; i < pShoppingCart->difItemsInCart ; i++)
+		{
+			freeShoppingItem(pShoppingCart->ItemArr[i]);
+		}
+		printf("SYSTEM: Freed Customer's Cart..\n");
+	}
+	pShoppingCart->ItemArr = NULL;
+	pShoppingCart->difItemsInCart = 0;
+	
+
 }
 
-float totalPrice(ShoppingCart* pShoppingCart)
+float totalPrice(const ShoppingCart* pShoppingCart)
 {
 	float sum = 0;
 	int i;

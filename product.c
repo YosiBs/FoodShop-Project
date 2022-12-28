@@ -23,7 +23,7 @@ void initProduct(Product* pProduct)
 
 
 
-void printProduct(Product* pProduct)
+void printProduct(const Product* pProduct)
 {
 	printf("%-15s\t%-15s\t%-15s\t%-15.2f\t%-15d\n", pProduct->name, pProduct->barcode, typeTitle[pProduct->Type], pProduct->price, pProduct->unitsInStock);
 }
@@ -108,7 +108,7 @@ int getUnitsInStock()
 	return stock;
 }
 
-int isValid(char* check)
+int isValid(const char* check)
 {
 
 	if (check == NULL || strlen(check) != 7) return 0;
@@ -117,7 +117,7 @@ int isValid(char* check)
 
 	// Check the first and last characters
 	if (!isalpha(check[0]) || !isalpha(check[6])) return 0;
-
+	if (!isupper(check[0]) || !isupper(check[6])) return 0;
 	// Check the middle characters
 	for (int i = 1; i < 6; i++) {
 		if (isdigit(check[i])) {

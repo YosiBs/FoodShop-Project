@@ -81,7 +81,7 @@ char**	splitCharsToWords(char* str, int* pCount, int* pTotalLength)
 	*pCount = count;
 	return wordsArray;
 }
-int checkIfOnlyNumber(char* str)// return 1 if not good
+int checkIfOnlyNumber(const char* str)// return 1 if not good
 {
 	
 	unsigned int i;
@@ -94,10 +94,9 @@ int checkIfOnlyNumber(char* str)// return 1 if not good
 	
 		}
 	return 1;
-	
 
 }
-int checkExactHashTag(char* str)
+int checkExactHashTag(const char* str)
 {
 	unsigned int i;
 	int count=0;

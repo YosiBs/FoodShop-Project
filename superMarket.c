@@ -20,21 +20,22 @@ void initSuperMarket(SuperMarket* pSuperMarket)
 
 }
 
-void printSuperMarket(SuperMarket* pSuperMarket)
+void printSuperMarket(const SuperMarket* pSuperMarket)
 {
-	printf("\n@@---------------------SuperMarket Details---------------------@@\n");
+	printf("\n@@--@@--@@-------------SuperMarket Details-------------@@--@@--@@\n");
 	printf("\nSuperMarket: %s\n", pSuperMarket->name);
-	printf("\t~~Address~~ \n");
 	printAddress(&pSuperMarket->address);
 	printf("\n\t~~Customer List~~ \n");
-	printAllCustomers(pSuperMarket);//print Customers
+	printAllCustomers(pSuperMarket);
 	printf("\nNumber of Customers: %d\n", pSuperMarket->numOfCustomers);
 	printf("\n\t~~Product List~~\n");
-	printAllProducts(pSuperMarket);//print Products
+	printAllProducts(pSuperMarket);
 	printf("\nNumber of Products: %d\n", pSuperMarket->numOfProducts);
+	printf("\n@@--@@--@@--@@--@@--@@--@@--@@--@@--@@--@@--@@--@@--@@--@@--@@--@@\n");
+
 }
 
-void printAllCustomers(SuperMarket* pSuperMarket)
+int printAllCustomers(const SuperMarket* pSuperMarket)
 {
 	int i;
 	if (pSuperMarket->numOfCustomers != 0)
@@ -43,13 +44,15 @@ void printAllCustomers(SuperMarket* pSuperMarket)
 		{
 			printCustomer(&pSuperMarket->customerArr[i]);
 		}
+		return 1;
 	}
 	else {
-		printf("~~There is no Customers Yet...\n");
+		printf("SYSTEM:There is no Customers Yet...\n");
+		return 0;
 	}
 }
 
-void printAllProducts(SuperMarket* pSuperMarket)
+void printAllProducts(const SuperMarket* pSuperMarket)
 {
 	int i;
 	char a1[20]="~Product Name~", a2[20] ="~Barcode~", a3[20] ="~Type~", a4[20] ="~Price~", a5[20] ="~Units in Stock~";
@@ -62,7 +65,7 @@ void printAllProducts(SuperMarket* pSuperMarket)
 		}
 	}
 	else {
-		printf("~~There is no Products Yet...\n");
+		printf("SYSTEM:There is no Products Yet...\n");
 	}
 }
 
@@ -199,13 +202,26 @@ int shop(SuperMarket* pSuperMarket)
 	return 0;
 }
 
-void printProductsByType(SuperMarket* pSuperMarket)
+void printProductsByType(const SuperMarket* pSuperMarket)
 {
 	int i, requestedType;
-
+	int shelfCount = 0, frozenCount = 0, fridgeCount = 0, fruitVegtableCount = 0;
+	for (i=0 ;i < pSuperMarket->numOfProducts ;i++)
+	{
+		if (pSuperMarket->productArr[i]->Type == 0) shelfCount++;
+		if (pSuperMarket->productArr[i]->Type == 1) frozenCount++;
+		if (pSuperMarket->productArr[i]->Type == 2) fridgeCount++;
+		if (pSuperMarket->productArr[i]->Type == 3) fruitVegtableCount++;
+	}
 	printf("-----------------PRINT PRODUCTS BY TYPE-----------------\n");
 	requestedType = getProductType();
+	if ((requestedType==0 && shelfCount==0) || (requestedType == 1 && frozenCount == 0) || (requestedType == 2 && fridgeCount == 0) || (requestedType == 3 && fruitVegtableCount == 0))
+	{
+		printf("SYSTEM:There is no Products from that type..\n");
+		return;
+	}
 	char a1[20] = "~Product Name~", a2[20] = "~Barcode~", a3[20] = "~Type~", a4[20] = "~Price~", a5[20] = "~Units in Stock~";
+	
 	printf("%-15s\t%-15s\t%-15s\t%-15s\t%-15s\t\n", a1, a2, a3, a4, a5);
 	for (i = 0; i < pSuperMarket->numOfProducts; i++)
 	{
@@ -216,7 +232,7 @@ void printProductsByType(SuperMarket* pSuperMarket)
 
 	}
 }
-int isBarcodeTaken(char* temp ,const SuperMarket* pSuperMarket)
+int isBarcodeTaken(const char* temp ,const SuperMarket* pSuperMarket)
 {
 	int i;
 	for (i=0;i<pSuperMarket->numOfProducts;i++)
@@ -231,20 +247,7 @@ int isBarcodeTaken(char* temp ,const SuperMarket* pSuperMarket)
 
 }
 
-void freeSuperMarket(SuperMarket* pSuperMarket)
-{
-	int i;
-	for (i = 0; i < pSuperMarket->numOfProducts; i++)// free all products
-	{
-		freeProduct(pSuperMarket->productArr[i]);
-	}
-	for (i = 0; i < pSuperMarket->numOfCustomers; i++)// free all customers
-	{
-		freeCustomer(&pSuperMarket->customerArr[i]);
-	}
-	freeAddress(&pSuperMarket->address);
-	free(pSuperMarket);// free super market
-}
+
 
 void askUserToAddProduct(SuperMarket* pSuperMarket)
 {
@@ -276,24 +279,19 @@ void askUserToAddCustomer(SuperMarket* pSuperMarket)
 	
 }
 
-Product* getProductByBarcode(char* reqBarcode, SuperMarket* pSuperMarket)
+Product* getProductByBarcode(const char* reqBarcode, const  SuperMarket* pSuperMarket)
 {
 	int i;
-	//int size = strlen(reqBarcode)+1;
-	//char* fixedBarcode=myGets(reqBarcode, size);
 	for (i = 0; i < pSuperMarket->numOfProducts; i++)
 	{
-		if (strcmp(pSuperMarket->productArr[i]->barcode, reqBarcode)==0)// problem
+		if (strcmp(pSuperMarket->productArr[i]->barcode, reqBarcode)==0)
 		{
 			return pSuperMarket->productArr[i];
-		}
-			
+		}	
 	}
-	
 	return NULL;
-	
 }
-int updateStock(SuperMarket* pSuperMarket, int productIndex)
+int updateStock(SuperMarket* pSuperMarket, const int productIndex)
 {
 	int newAmount;
 	printf("Update Units in stock-\nOld Amount:%d\n", pSuperMarket->productArr[productIndex]->unitsInStock);
@@ -306,7 +304,7 @@ int updateStock(SuperMarket* pSuperMarket, int productIndex)
 	
 	return 0;
 }
-int printCustomerShoppingCart(SuperMarket * pSuperMarket)
+int printCustomerShoppingCart(const SuperMarket * pSuperMarket)
 {
 	char* reqCustomer;
 	int e;
@@ -316,7 +314,10 @@ int printCustomerShoppingCart(SuperMarket * pSuperMarket)
 		return 0;
 	}
 	else {
-		printAllCustomers(pSuperMarket);
+		if (printAllCustomers(pSuperMarket) == 0)
+		{
+			return 0;
+		}
 		printf("Who is shopping?\n");
 		reqCustomer = getStrExactName("Enter Customer Name: \n");
 		e = isCustomerExist(reqCustomer, pSuperMarket);
@@ -326,14 +327,27 @@ int printCustomerShoppingCart(SuperMarket * pSuperMarket)
 			return 0;
 		}
 		e -= 1;
-		//PrintAllShoppingItems();
-		printShoppingCart(pSuperMarket->customerArr[e].Cart);
-		totalPrice(pSuperMarket->customerArr[e].Cart);
+		if (printShoppingCart(pSuperMarket->customerArr[e].Cart))
+		{
+			totalPrice(pSuperMarket->customerArr[e].Cart);
+		}
+		
+		
 	}
 
+	return e;
+}
+int paymentProcess(SuperMarket * pSuperMarket)
+{
+	int e=printCustomerShoppingCart(pSuperMarket);
+	
+	freeShoppingCart(pSuperMarket->customerArr[e].Cart);
+
+	printf("~~Payment Done Seccessfully!~~\n");
 	return 0;
 }
-int isCustomerExist(char* temp, const SuperMarket* pSuperMarket)
+
+int isCustomerExist(const char* temp, const SuperMarket* pSuperMarket)
 {
 	int i;
 	for (i = 0; i < pSuperMarket->numOfCustomers; i++)
@@ -346,7 +360,41 @@ int isCustomerExist(char* temp, const SuperMarket* pSuperMarket)
 	}
 	return 0;
 }
+int exitProgram(SuperMarket * pSuperMarket)
+{
+	printf("---------------EXIT PROGRAM---------------\n");
+	freeSuperMarket(pSuperMarket);
+	printf("---------------COMPLETE---------------\n");
+
+	return 0;
+}
 
 
-
-
+int freeSuperMarket(SuperMarket* pSuperMarket)
+{
+	int i;
+	//free all Customers:
+	if (pSuperMarket->numOfCustomers > 0)
+	{
+		for (i = 0; i < pSuperMarket->numOfCustomers; i++)
+		{
+			freeCustomer(&pSuperMarket->customerArr[i]);
+		}
+		free(pSuperMarket->customerArr);
+		printf("SYSTEM: Freed all Customers~~\n");
+	}
+	//free all products:
+	if (pSuperMarket->numOfProducts > 0)
+	{
+		for (i = 0; i < pSuperMarket->numOfProducts; i++)
+		{
+			freeProduct(pSuperMarket->productArr[i]);
+		}
+		free(pSuperMarket->productArr);
+		printf("SYSTEM: Freed all Products~~\n");
+	}
+	freeAddress(&pSuperMarket->address);
+	free(pSuperMarket->name);
+	printf("SYSTEM: Freed SuperMarket~~\n");
+	return 0;
+}

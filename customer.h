@@ -2,19 +2,16 @@
 #define _CUSTOMER_H
 #include "shoppingCart.h"
 
-
-
 typedef struct
 {
 	char* name;
-	ShoppingCart* Cart;// array of shopping items
+	ShoppingCart* Cart;
 
 } Customer;
 
 int initCustomer(Customer* pCustomer);
-void printCustomer(Customer* pCustomer);//CONST?
-int PrintAllShoppingItems(Customer* pCustomer);//CONST?
+void printCustomer(const Customer* pCustomer);
+int PrintAllShoppingItems(const Customer* pCustomer);
 int getCustomerName(Customer* pCustomer);
 void freeCustomer(Customer* pCustomer);
-
 #endif

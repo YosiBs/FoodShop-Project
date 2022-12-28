@@ -19,9 +19,9 @@ void initAddress(Address* pAddress)
 		addressInput = getStrExactName("Please Enter an address for the SuperMarket.\nThe address need's to be as follow:\nStreet#House Number#City\n\nFor Example: Alenbi#20#Tel Aviv\nYou can use up to 254 chars.\n\n");
 
 		addressArr = splitCharsToWords(addressInput, &wordCount, &totalLength);
-	} while (( !checkExactHashTag(addressInput)) || (!checkIfOnlyNumber(addressArr[1])) );
+	} while (( !checkExactHashTag(addressInput)) || (!checkIfOnlyNumber(addressArr[1])) || (wordCount!=3) );
 	
-	for (i=0;i<3; i++)
+	for (i=0;i< wordCount; i++)
 	{
 		fixAd(addressArr[i]);
 	}
@@ -32,7 +32,7 @@ void initAddress(Address* pAddress)
 	free(addressArr);
 }
 
-void printAddress(Address* pAddress)
+void printAddress(const Address* pAddress)
 {
 	printf("Address:%s %s,%s\n", pAddress->street, pAddress->houseNumber, pAddress->city);
 	

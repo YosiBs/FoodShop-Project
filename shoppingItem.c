@@ -2,6 +2,8 @@
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>
+#include <stdlib.h>
+
 #include "shoppingItem.h"
 #include "product.h"
 #include "shoppingCart.h"
@@ -14,7 +16,7 @@ void initShoppingItem(ShoppingItem* pShoppingItem,Product* p)
 	
 }
 
-void printShoppingItem(ShoppingItem* pShoppingItem)
+void printShoppingItem(const ShoppingItem* pShoppingItem)
 {
 	printf("Barcode: %s\t Price per item: %.2f\t item Amount: %d\n", pShoppingItem->barcode, pShoppingItem->price, pShoppingItem->itemAmount);
 
@@ -34,6 +36,11 @@ int getItemAmount(Product* p)
 }
 int updateItemAmount(ShoppingItem* pShoppingItem, Product* p)
 {
-	
 	return getItemAmount(p);
+}
+
+int freeShoppingItem(ShoppingItem * pShoppingItem)
+{
+	free(pShoppingItem);
+	return 1;
 }

@@ -7,14 +7,13 @@ typedef struct
 	char barcode[BARCODE_LEN+1];
 	float price;
 	int itemAmount;
-
 } ShoppingItem;
 
 void initShoppingItem(ShoppingItem* pShoppingItem, Product* p);
-void printShoppingItem(ShoppingItem* pShoppingItem);//CONST?
+void printShoppingItem(const ShoppingItem* pShoppingItem);
 int getItemAmount(Product* p);
 int updateItemAmount(ShoppingItem* pShoppingItem, Product* p);
-
+int freeShoppingItem(ShoppingItem* pShoppingItem);
 #endif
 
 

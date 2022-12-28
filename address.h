@@ -1,8 +1,6 @@
 #ifndef _ADDRESS_H
 #define _ADDRESS_H
 
-
-
 typedef struct
 {
 	char* street;
@@ -11,8 +9,8 @@ typedef struct
 } Address;
 
 void initAddress(Address* pAddress);
-void printAddress(Address* pAddress);//CONST?
-void freeAddress(Address* pAddress);//free street, city,house number
+void printAddress(const Address* pAddress);
+void freeAddress(Address* pAddress);
 void fixAd(char *str);
 int find_last_word(char *str);
 void remove_extra_spaces(char *str);

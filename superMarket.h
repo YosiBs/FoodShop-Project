@@ -3,7 +3,6 @@
 #include "customer.h"
 #include "product.h"
 #include "address.h"
-
 typedef struct
 {
 	char* name;
@@ -12,29 +11,26 @@ typedef struct
 	int numOfCustomers;
 	Product** productArr;
 	int numOfProducts;
-
 } SuperMarket;
 
 void initSuperMarket(SuperMarket* pSuperMarket);
-void printSuperMarket(SuperMarket* pSuperMarket);//CONST?
-void printAllCustomers(SuperMarket* pSuperMarket);//CONST?
-void printAllProducts(SuperMarket* pSuperMarket);//CONST?
+void printSuperMarket(const SuperMarket* pSuperMarket);
+int printAllCustomers(const SuperMarket* pSuperMarket);
+void printAllProducts(const SuperMarket* pSuperMarket);
 void getSuperMarketName(SuperMarket* pSuperMarket);
-
 void getAddress(SuperMarket* pSuperMarket);
-
-int isBarcodeTaken(char* temp,const SuperMarket* pSuperMarket);//CONST?
+int isBarcodeTaken(const char* temp,const SuperMarket* pSuperMarket);
 int addProduct(SuperMarket* pSuperMarket);
 int addCustomer(SuperMarket* pSuperMarket);
 int shop(SuperMarket* pSuperMarket);
-void printProductsByType(SuperMarket* pSuperMarket);//CONST?
-void freeSuperMarket(SuperMarket* pSuperMarket);// free customer and product and name
+void printProductsByType(const SuperMarket* pSuperMarket);
+int freeSuperMarket(SuperMarket* pSuperMarket);
 void askUserToAddProduct(SuperMarket* pSuperMarket);
 void askUserToAddCustomer(SuperMarket* pSuperMarket);
-
-Product* getProductByBarcode(char* reqBarcode,SuperMarket* pSuperMarket);
-int isCustomerExist(char* temp, const SuperMarket* pSuperMarket);//CONST?
-int updateStock(SuperMarket* pSuperMarket, int index);
-int printCustomerShoppingCart(SuperMarket* pSuperMarket);//CONST?
-
+Product* getProductByBarcode(const char* reqBarcode, const SuperMarket* pSuperMarket);
+int isCustomerExist(const char* temp, const SuperMarket* pSuperMarket);
+int updateStock(SuperMarket* pSuperMarket, const int index);
+int printCustomerShoppingCart(const SuperMarket* pSuperMarket);
+int paymentProcess(SuperMarket* pSuperMarket);
+int exitProgram(SuperMarket* pSuperMarket);
 #endif

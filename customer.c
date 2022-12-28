@@ -19,7 +19,7 @@ int initCustomer(Customer* pCustomer)
 	return 1;
 }
 
-void printCustomer(Customer* pCustomer)
+void printCustomer(const Customer* pCustomer)
 {
 	printf("\nCustomer Name: %s\n", pCustomer->name);
 	if (pCustomer->Cart->difItemsInCart>0)
@@ -28,13 +28,10 @@ void printCustomer(Customer* pCustomer)
 	}
 	else {
 		printf("Cart is Empty..\n");
-
 	}
-	
-	//PrintAllShoppingItems(pCustomer);
 }
 
-int PrintAllShoppingItems(Customer* pCustomer)
+int PrintAllShoppingItems(const Customer* pCustomer)
 {
 	int i;
 	if (pCustomer->Cart->difItemsInCart != 0)
@@ -67,5 +64,9 @@ int getCustomerName(Customer* pCustomer)
 
 void freeCustomer(Customer* pCustomer)
 {
+	freeShoppingCart(pCustomer->Cart);
+	free(pCustomer->Cart->ItemArr);
+	free(pCustomer->Cart);
 	free(pCustomer->name);
+	//free(pCustomer);
 }
